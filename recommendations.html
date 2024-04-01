@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recommendations</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Spotify Play Button CSS -->
+    <link rel="stylesheet" href="https://sdk.scdn.co/spotify-player.css">
+    <style>
+        body {
+            background-color: #a1c4fd; /* Pastel blue color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Your Recommendations</h1>
+        <!-- Top 10 Tracks Tab -->
+        <div class="text-center mb-4">
+            <a href="{{ url_for('top_tracks') }}" class="btn btn-primary">View Your Top 10 Tracks</a>
+        </div>
+        <div class="row">
+            {% if tracks %}
+                {% for track in tracks %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ track.album.images[0].url }}" class="card-img-top" alt="Album cover">
+                        <div class="card-body">
+                            <!-- Song Name and Artist as a link to Spotify -->
+                            <h5 class="card-title"><a href="{{ track.external_urls.spotify }}" target="_blank">{{ track.name }}</a></h5>
+                            <p class="card-text"><a href="{{ track.external_urls.spotify }}" target="_blank">{{ track.artists[0].name }}</a></p>
+                            <!-- Spotify Play Button -->
+                            <div class="spotify-play-button" data-track-id="{{ track.id }}"></div>
+                            <!-- Spotify Embed Player for Preview -->
+                            <iframe src="https://open.spotify.com/embed/track/{{ track.id }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error:</strong> No recommendations found.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Spotify Play Button JS -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const token = 'YOUR_SPOTIFY_ACCESS_TOKEN'; // Replace with your actual Spotify access token
+            const player = new Spotify.Player({
+                name: 'Web Playback SDK Template',
+                getOAuthToken: cb => { cb(token); }
+            });
+
+            // Connect to the player!
+            player.connect();
+        };
+    </script>
+</body>
+</html>
