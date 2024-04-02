@@ -5,9 +5,9 @@ from spotipy.oauth2 import SpotifyOAuth
 app = Flask(__name__)
 
 # Initialize Spotipy client with additional scopes for user authentication
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='5c44258a5dbd41cba08e4a4a211163c5',
-                                               client_secret='e31fbff08ba1490395e1e9b91633d2f9',
-                                               redirect_uri='http://127.0.0.1:3000',
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='e6849b973ecc4aa5a562b46479aae1c0',
+                                               client_secret='22b9ad37ccd04125925749ab1161c286',
+                                               redirect_uri='http://localhost:3000',
                                                scope='user-top-read'))
 
 # Function to get music recommendations based on mood and genres
