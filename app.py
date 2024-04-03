@@ -140,5 +140,3 @@ def top_tracks():
     return render_template('top_tracks.html', tracks=top_tracks)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
